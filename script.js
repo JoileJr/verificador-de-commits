@@ -13,7 +13,7 @@ function buscarCommits(repositorio, dataInicial, dataFinal) {
     const url = `https://api.github.com/repos/${repositorio}/commits?since=${dataInicial}&until=${dataFinal}`;
     fetch(url).then(response=>response.json()).then(commits=>{
         console.log(commits);
-        console.log("buscar commits ok")
+        console.log("buscar commits ok");
         contarCommits(commits);
     })
 }
@@ -21,7 +21,7 @@ function buscarCommits(repositorio, dataInicial, dataFinal) {
 function contarCommits(commits){
     const commitsPorDia = {};
     commits.forEach(element => {
-        const dataCommit = element.commit.author.date.substr(0, 10)
+        const dataCommit = element.commit.author.date.substr(0, 10);
         if(commitsPorDia[dataCommit]){
             commitsPorDia[dataCommit].quantidade++;
         } else{
@@ -41,8 +41,8 @@ function mostrarTela(commits){
         const tr = document.createElement("tr");
         const data = document.createElement("td");
         const quantidade = document.createElement("td");
-        data.innerHTML = element.data
-        quantidade.innerHTML = element.quantidade
+        data.innerHTML = element.data;
+        quantidade.innerHTML = element.quantidade;
         dados.appendChild(tr);
         tr.appendChild(data);
         tr.appendChild(quantidade);
