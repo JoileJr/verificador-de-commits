@@ -14,11 +14,7 @@ form.addEventListener('submit', function(event){
 function buscarForks(repositorio){
     const url = `https://api.github.com/repos/${repositorio}/forks`;
     fetch(url).then(response => response.json()).then(forks => {
-        console.log(forks);
-        console.log("buscar forks ok");
         const quantidade = forks.length;
-        console.log(quantidade+ " forks")
-
         const container = document.querySelector("#forks-stars");
         const elemento = document.createElement("h4");
         elemento.textContent = `Forks: ${quantidade}`;
@@ -30,11 +26,6 @@ function buscarStars(repositorio){
     const url = `https://api.github.com/repos/${repositorio}`;
     fetch(url).then(response => response.json()).then(data => {
         const stars = data.stargazers_count;
-        console.log(stars);
-        console.log("buscar stars ok");
-        
-        console.log(stars + " stars")
-
         const container = document.querySelector("#forks-stars");
         const elemento = document.createElement("h4");
         elemento.textContent = `Stars: ${stars}`;
@@ -45,8 +36,6 @@ function buscarStars(repositorio){
 function buscarCommits(repositorio, dataInicial, dataFinal) {
     const url = `https://api.github.com/repos/${repositorio}/commits?since=${dataInicial}&until=${dataFinal}`;
     fetch(url).then(response=>response.json()).then(commits=>{
-        console.log(commits);
-        console.log("buscar commits ok");
         contarCommits(commits);
     })
 }
