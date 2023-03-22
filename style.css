@@ -41,3 +41,11 @@ tr:nth-child(even) {
 tr:hover {
   background-color: #ddd;
 }
+
+.forks {
+    margin-top: 20px;
+    border-collapse: collapse;
+    width: 100%;
+    font-family: Arial, sans-serif;
+    font-size: 14px;
+}
