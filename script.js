@@ -37,13 +37,20 @@ function buscarCommits(repositorio, dataInicial, dataFinal) {
     const url = `https://api.github.com/repos/${repositorio}/commits?since=${dataInicial}&until=${dataFinal}`;
     fetch(url).then(response=>response.json()).then(commits=>{
         contarCommits(commits);
+        console.log(commits)
     })
 }
 
 function contarCommits(commits){
     const commitsPorDia = {};
+    let autorCommit = '';
+    let mensagemCommit = '';
+
     commits.forEach(element => {
         const dataCommit = element.commit.author.date.substr(0, 10);
+        autorCommit = element.commit.author.name
+        mensagemCommit = element.commit.message
+        console.log(autorCommit)
         if(commitsPorDia[dataCommit]){
             commitsPorDia[dataCommit].quantidade++;
         } else{
@@ -52,22 +59,32 @@ function contarCommits(commits){
     });
 
     const commitsPorDiaArray = Object.keys(commitsPorDia).map(dataCommit => {
-        return { data: dataCommit, quantidade: commitsPorDia[dataCommit].quantidade }
+        return { data: dataCommit, quantidade: commitsPorDia[dataCommit].quantidade}
     });
-    mostrarTela(commitsPorDiaArray);
+
+    mostrarTela(commitsPorDiaArray, `${autorCommit}`, `${mensagemCommit}`);
 }
 
-function mostrarTela(commits){
+function mostrarTela(commits, autorCommit, mensagemCommit){
     const dados = document.querySelector("#dados");
+
     commits.forEach( element=> {
         const tr = document.createElement("tr");
         const data = document.createElement("td");
         const quantidade = document.createElement("td");
+        const autor = document.createElement("td");
+        const mensagem = document.createElement("td");
+        mensagem.innerHTML = mensagemCommit
+        autor.innerHTML = autorCommit;
         data.innerHTML = element.data;
         quantidade.innerHTML = element.quantidade;
         dados.appendChild(tr);
+        tr.appendChild(autor);
+        tr.appendChild(mensagem);
         tr.appendChild(data);
         tr.appendChild(quantidade);
     });
 }
+
+
         
