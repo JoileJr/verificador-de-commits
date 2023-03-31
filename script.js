@@ -5,10 +5,10 @@ form.addEventListener('submit', function(event){
     const repositorio = document.querySelector("#repositorio").value;
     const dataInicial = document.querySelector("#dataInicial").value;
     const dataFinal = document.querySelector("#dataFinal").value;
-
-    buscarCommits(repositorio, dataInicial, dataFinal);
-    buscarForks(repositorio);
-    buscarStars(repositorio);
+    const url = tratarUrl(repositorio);
+    buscarCommits(url, dataInicial, dataFinal);
+    buscarForks(url);
+    buscarStars(url);
 });
 
 function buscarForks(repositorio){
@@ -43,40 +43,39 @@ function buscarCommits(repositorio, dataInicial, dataFinal) {
 
 function contarCommits(commits){
     const commitsPorDia = {};
-    let autorCommit = '';
-    let mensagemCommit = '';
-
     commits.forEach(element => {
-        const dataCommit = element.commit.author.date.substr(0, 10);
-        autorCommit = element.commit.author.name
-        mensagemCommit = element.commit.message
-        console.log(autorCommit)
+        const dataCommit = element.commit.author.date.substr(0,10);
+        const author = element.commit.author.name;
+        const comentario = element.commit.message;
         if(commitsPorDia[dataCommit]){
             commitsPorDia[dataCommit].quantidade++;
-        } else{
-            commitsPorDia[dataCommit] = {quantidade: 1, data: dataCommit}
+        }else{
+            commitsPorDia[dataCommit] = {quantidade:1, data:dataCommit, author:author, comentario:comentario};
         }
     });
 
     const commitsPorDiaArray = Object.keys(commitsPorDia).map(dataCommit => {
-        return { data: dataCommit, quantidade: commitsPorDia[dataCommit].quantidade}
+        return {data:dataCommit, quantidade:commitsPorDia[dataCommit].quantidade, author: commitsPorDia[dataCommit].author, message: commitsPorDia[dataCommit].comentario}
     });
 
-    mostrarTela(commitsPorDiaArray, `${autorCommit}`, `${mensagemCommit}`);
+    mostrarTela(commitsPorDiaArray)
 }
 
-function mostrarTela(commits, autorCommit, mensagemCommit){
+function mostrarTela(commits){
     const dados = document.querySelector("#dados");
+    popularTabela(commits);    
+}
 
+function popularTabela(commits){
     commits.forEach( element=> {
         const tr = document.createElement("tr");
-        const data = document.createElement("td");
-        const quantidade = document.createElement("td");
         const autor = document.createElement("td");
         const mensagem = document.createElement("td");
-        mensagem.innerHTML = mensagemCommit
-        autor.innerHTML = autorCommit;
-        data.innerHTML = element.data;
+        const data = document.createElement("td");
+        const quantidade = document.createElement("td");
+        mensagem.innerHTML = element.message;
+        autor.innerHTML = element.author;
+        data.innerHTML = formataData(element.data);
         quantidade.innerHTML = element.quantidade;
         dados.appendChild(tr);
         tr.appendChild(autor);
@@ -86,5 +85,31 @@ function mostrarTela(commits, autorCommit, mensagemCommit){
     });
 }
 
+function tratarUrl(url){
+    const regex = /^https?:\/\/github.com\/([^/]+)\/([^/]+)/;
+    const correspondencias = url.match(regex);
+    if (correspondencias) {
+        const usuario = correspondencias[1];
+        const repositorio = correspondencias[2];
+        return usuario + "/" + repositorio;
+    }
+    const regexSemHttps = /^github.com\/([^/]+)\/([^/]+)/;
+    const correspondenciasSemHttps = url.match(regexSemHttps);
+    if (correspondenciasSemHttps) {
+        const usuario = correspondenciasSemHttps[1];
+        const repositorio = correspondenciasSemHttps[2];
+        return usuario + "/" + repositorio;
+    }
+    return url;
+}
+
+function formataData(dataCommit){
+    const data = new Date(dataCommit);
+    const mes = (data.getMonth() + 1).toString().padStart(2, '0');
+    const dia = data.getDate().toString().padStart(2, '0');
+    const ano = data.getFullYear().toString();
+    const dataFormatada = `${dia}/${mes}/${ano}`;
+    return dataFormatada;
+}
 
         
