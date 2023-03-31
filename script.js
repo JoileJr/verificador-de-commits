@@ -132,11 +132,11 @@ function calcularDiasParaRealizarAtividade(dataInicial, dataFinal) {
 }
 
 function diascomCommit(qtd) {
-    document.getElementById("dias-com-commit").innerHTML = `Dias com Commits: ${qtd}`;
+    document.getElementById("dias-com-commit").innerHTML = `${qtd}`;
 }
 
 function porcentagemDeDiasComCommit(totalDias, diasCommit){
     const porcentagem = (diasCommit / totalDias) * 100;
     console.log(porcentagem);
-    document.getElementById("porcentagem-de-dias-trabalhados").innerHTML = `Porcentagem de dias com commit: ${porcentagem.toFixed(1)}%`;
+    document.getElementById("porcentagem-de-dias-trabalhados").innerHTML = `${porcentagem.toFixed(1)}%`;
 }
