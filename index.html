@@ -10,13 +10,19 @@
 <body>
     <div class="container" id="container">
         <form>
-            <label for="">Repositório</label>
-            <input type="text" name="" id="repositorio" placeholder="user/nome-repositorio" required><br><br>
-            <label for="">Data Inicial</label>
-            <input type="date" name="" id="dataInicial" required><br><br>
-            <label for="">Data Final</label>
-            <input type="date" name="" id="dataFinal" required><br><br>
-            <input type="submit" value="Pesquisar">
+            <div class="rows">
+                <label for="">Repositório</label>
+                <input type="text" name="" id="repositorio" placeholder="user/nome-repositorio" required>
+            </div>
+            <div class="rows">
+                <label for="">Data Inicial</label>
+                <input type="date" name="" id="dataInicial" required>
+            </div>
+            <div class="rows">
+                <label for="">Data Final</label>
+                <input type="date" name="" id="dataFinal" required>
+            </div>
+            <input id="button-submit" type="submit" value="Pesquisar">
         </form>
        
         <table id="dados">

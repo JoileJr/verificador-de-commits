@@ -111,5 +111,4 @@ function formataData(dataCommit){
     const dataFormatada = `${dia}/${mes}/${ano}`;
     return dataFormatada;
 }
-
         
