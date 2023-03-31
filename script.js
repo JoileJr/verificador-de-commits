@@ -6,6 +6,8 @@ form.addEventListener('submit', function(event){
     const dataInicial = document.querySelector("#dataInicial").value;
     const dataFinal = document.querySelector("#dataFinal").value;
     const url = tratarUrl(repositorio);
+
+    calcularDiasParaRealizarAtividade(dataInicial, dataFinal);
     buscarCommits(url, dataInicial, dataFinal);
     buscarForks(url);
     buscarStars(url);
@@ -57,8 +59,16 @@ function contarCommits(commits){
     const commitsPorDiaArray = Object.keys(commitsPorDia).map(dataCommit => {
         return {data:dataCommit, quantidade:commitsPorDia[dataCommit].quantidade, author: commitsPorDia[dataCommit].author, message: commitsPorDia[dataCommit].comentario}
     });
+    mostrarTela(commitsPorDiaArray);
 
-    mostrarTela(commitsPorDiaArray)
+    const diasCommit =  commitsPorDiaArray.length
+    console.log("Dias com commit: ",diasCommit);
+    diascomCommit(diasCommit);
+
+    const tempo = document.getElementById("tempo");
+    const totalDias = tempo.innerHTML;
+    console.log(totalDias);
+    porcentagemDeDiasComCommit(totalDias, diasCommit);
 }
 
 function mostrarTela(commits){
@@ -111,4 +121,22 @@ function formataData(dataCommit){
     const dataFormatada = `${dia}/${mes}/${ano}`;
     return dataFormatada;
 }
-        
+
+function calcularDiasParaRealizarAtividade(dataInicial, dataFinal) {
+    const day1 = new Date(dataFinal);
+    const day2 = new Date(dataInicial);
+    const difference = day1.getTime() - day2.getTime();
+    const days = difference / (1000 * 3600 * 24);
+    document.getElementById("tempo").innerHTML = `${days}`;
+    console.log(`Dias disponíveis: ${days}`);
+}
+
+function diascomCommit(qtd) {
+    document.getElementById("dias-com-commit").innerHTML = `Dias com Commits: ${qtd}`;
+}
+
+function porcentagemDeDiasComCommit(totalDias, diasCommit){
+    const porcentagem = (diasCommit / totalDias) * 100;
+    console.log(porcentagem);
+    document.getElementById("porcentagem-de-dias-trabalhados").innerHTML = `Porcentagem de dias com commit: ${porcentagem.toFixed(1)}%`;
+}
