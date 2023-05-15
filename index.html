@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-COMPATIBLE" content="IE=edge">
+    <meta name="viewport" content="width-device-width, initial-scale=1.0">
+    <title>Verificador de commits</title>
+</head>
+<body>
+    <div class="formulario">
+        <div class="container">
+            <form>
+                <div class="rows">
+                    <label for="">Repositório</label>
+                    <input type="text" id="url" placeholder="user/nome-repositorio" required>
+                </div>
+                <div class="rows">
+                    <label for="">Data Inicial</label>
+                    <input type="date" name="" id="dataInicial" required>
+                </div>
+                <div class="rows">
+                    <label for="">Data Final</label>
+                    <input type="date" name="" id="dataFinal" required>
+                </div>
+                <input class="button-submit" type="submit" value="Pesquisar" />
+                <table id="tabela" class="table">
+                    <thead>
+                        <tr>
+                            <th>Data</th>
+                            <th>Quantidade de Commits</th>
+                            <th>Autor</th>
+                            <th>Comentários</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </form>
+            <div id="dados"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

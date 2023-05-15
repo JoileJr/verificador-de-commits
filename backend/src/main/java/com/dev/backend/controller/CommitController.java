@@ -1,8 +1,9 @@
-package com.example.verificadorCommits.controller;
+package com.dev.backend.controller;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,33 +13,31 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.verificadorCommits.entity.Commit;
-import com.example.verificadorCommits.service.CommitService;
-
+import com.dev.backend.entity.Commit;
+import com.dev.backend.service.CommitService;
 
 @RestController
 @RequestMapping("/commits")
 @CrossOrigin
 public class CommitController {
 
-	@Autowired
+    @Autowired
     private CommitService commitService;
-    
-    // localhost:8080/commits - com o verbo get
-    @GetMapping
-    public List<Commit> listarTodos(){
+
+    @GetMapping("/")
+    public List<Commit> listarTodos() {
         return commitService.listarTodos();
     }
 
-    // localhost:8080/commits - com verbo post
-    @PostMapping
-    public Commit salvar(@RequestBody Commit commit){
+    @PostMapping("/")
+    public Commit inserir(@RequestBody Commit commit){
         return commitService.salvar(commit);
     }
 
-    //localhost:8080/commits/1 - com o verbo delete
     @DeleteMapping("/{id}")
-    public void excluir(@PathVariable("id") Long id){
+    public ResponseEntity<Void> excluir(@PathVariable("id") Long id){
         commitService.excluir(id);
+        return ResponseEntity.ok().build();
     }
+
 }
